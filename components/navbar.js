@@ -1,7 +1,7 @@
 import { Input } from "./searchinput";
-import { ModeToggle } from "./theme-s";
+import { ModeToggle } from "../comman/theme/themeToggleButton";
+import { Suspense } from "react";
 export const Navbar = ({ searchParams,children }) => {
-    console.log(searchParams , "nav")
     return(<nav
         className="w-full max-w-screen-xl px-2 py-2 mx-auto bg-white border shadow-md dark:text-white rounded-xl border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 sm:px-8 sm:py-4 dark:bg-black ">
         <div className="container flex items-center justify-between gap-4 mx-auto dark:text-white text-blue-gray-900 flex-nowrap">
@@ -23,9 +23,11 @@ export const Navbar = ({ searchParams,children }) => {
             </a>
           </div>
           <div className="flex items-center">
-            <Input>
-              {children}
-            </Input>   
+            <Suspense fallback={<div>Loading search...</div>}>
+              <Input>
+                {children}
+              </Input>   
+            </Suspense>
               
             <ModeToggle className="" />
           </div>

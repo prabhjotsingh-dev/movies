@@ -1,5 +1,5 @@
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/comman/theme/theme-provider";
 export const metadata = {
   title: "SEARCH MOVIES",
   description: "SEARCH ANY MOVIE",
