@@ -51,6 +51,13 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        // ── Brand Colors (theme-aware via CSS variables) ──────────────────
+        // Use bg-brand-primary, text-brand-secondary, etc.
+        // Values switch automatically between light and dark mode.
+        "brand-primary": "hsl(var(--brand-primary))",
+        "brand-secondary": "hsl(var(--brand-secondary))",
+        "brand-accent": "hsl(var(--brand-accent))",
       },
       borderRadius: {
         lg: "var(--radius)",
