@@ -1,10 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
-    /* Warm zinc-tinted base — not pure white */
     --background: 240 5% 94%;
     --foreground: 224 15% 12%;
 
@@ -35,48 +34,37 @@
 
     --radius: 0.5rem;
 
-    /* ── Brand Colors (Light Mode) ──────────────────────────────── */
-    --brand-primary:   221 83% 53%;   /* #3b82f6 – vibrant blue      */
-    --brand-secondary: 158 64% 38%;   /* #10b981 – crisp emerald     */
-    --brand-accent:    38  92% 50%;   /* #f59e0b – warm amber        */
-  }
- 
-  .dark {
-    --background: 240 10% 3.9%;   /* Deep Zinc-950 equivalent */
-    --foreground: 210 40% 98%;
- 
-    --card: 240 10% 3.9%;
-    --card-foreground: 210 40% 98%;
- 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-
-    /* ── Brand Colors (Dark Mode: Desaturated) ──────────────────── */
-    --brand-primary:   217 75% 65%;   /* Sophisticated Blue          */
-    --brand-secondary: 158 60% 45%;   /* Premium Emerald             */
-    --brand-accent:    38  75% 55%;   /* Soft Amber                  */
+    --brand-primary: 221 83% 53%;
+    --brand-secondary: 158 64% 38%;
+    --brand-accent: 38 92% 50%;
   }
 }
- 
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 210 40% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --brand-primary: 217 75% 65%;
+  --brand-secondary: 158 60% 45%;
+  --brand-accent: 38 75% 55%;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -86,7 +74,6 @@
   }
 }
 
-/* ── Premium UI Utilities ───────────────────────────────────── */
 @layer utilities {
   .bezier-premium {
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -98,7 +85,8 @@
   }
 
   .dark .glass-morphism {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(15, 15, 20, 0.4);
+    @apply border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)];
   }
 
   .animate-stagger-fade {
@@ -119,21 +107,25 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .shimmer-bg {
-  background: linear-gradient(90deg, 
-    hsl(var(--muted)) 25%, 
-    hsl(var(--accent)) 50%, 
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--accent)) 50%,
     hsl(var(--muted)) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
 }
 
-/* Search suggestion entrance animation */
 @keyframes fadeSlideIn {
   from {
     opacity: 0;

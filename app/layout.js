@@ -7,8 +7,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="" > 
+    <html lang="en" suppressHydrationWarning>
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         >
           {children}
         </ThemeProvider>
-      </body>  
+      </body>
     </html>
   );
 }
