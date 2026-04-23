@@ -17,7 +17,7 @@ export const Input = ({ children }) => {
   }, 400);
 
   return (
-    <div className="relative flex flex-col">
+    <div className="flex relative flex-col">
       <div
         className={`
           group relative flex items-center gap-2
@@ -31,7 +31,10 @@ export const Input = ({ children }) => {
           }
           backdrop-blur-sm
         `}
-        style={{ transition: "border-color 0.3s cubic-bezier(0.16,1,0.3,1), background-color 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1)" }}
+        style={{
+          transition:
+            "border-color 0.3s cubic-bezier(0.16,1,0.3,1), background-color 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1)",
+        }}
       >
         <Search
           size={14}
@@ -73,7 +76,10 @@ export const Input = ({ children }) => {
             origin-left
             ${isFocused ? "scale-x-100 opacity-70" : "scale-x-0 opacity-0"}
           `}
-          style={{ transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease" }}
+          style={{
+            transition:
+              "transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease",
+          }}
         />
       </div>
 
