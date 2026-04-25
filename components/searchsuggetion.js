@@ -53,7 +53,7 @@ export async function Sugetions({ searchParams }) {
             "
           >
             <Link
-              href={`?suggetions=${encodeURIComponent(movie.Title)}`}
+              href={`/${encodeURIComponent(movie.imdbID)}`}
               className="
                 flex items-center gap-3
                 px-3 py-2.5

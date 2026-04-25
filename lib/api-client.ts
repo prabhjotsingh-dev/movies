@@ -1,11 +1,14 @@
-export async function rapidFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+export async function rapidFetch<T>(
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<T> {
   const url = `${process.env.RAPID_API_URL}${endpoint}`;
-  
+
   const defaultOptions: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY || '',
-      'X-RapidAPI-Host': process.env.RAPIDAPI_HOST || '',
+      "X-RapidAPI-Key": process.env.RAPIDAPI_KEY || "",
+      "X-RapidAPI-Host": process.env.RAPIDAPI_HOST || "",
     },
     ...options,
   };
@@ -22,9 +25,12 @@ export async function rapidFetch<T>(endpoint: string, options: RequestInit = {})
   }
 }
 
-export async function omdbFetch<T>(query: string, options: RequestInit = {}): Promise<T> {
+export async function omdbFetch<T>(
+  query: string,
+  options: RequestInit = {},
+): Promise<T> {
   const url = `${process.env.OMBD_URL}?apikey=${process.env.OMBD_API_KEY}&${query}`;
-  
+
   try {
     const response = await fetch(url, options);
     if (!response.ok) {

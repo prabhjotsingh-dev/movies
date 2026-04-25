@@ -1,18 +1,19 @@
 import { rapidFetch, omdbFetch } from "../lib/api-client";
-import { OMDBSearchResponse, SearchResponse } from "./types";
+import { OMDBSearchResponse, SearchResponse, OMDBMovieDetails } from "./types";
 
 export const movieService = {
-
-  async getAdvancedSearch(params: Record<string, string | number> = {}): Promise<SearchResponse> {
+  async getAdvancedSearch(
+    params: Record<string, string | number> = {},
+  ): Promise<SearchResponse> {
     const defaultParams = {
       start_year: 2022,
       end_year: 2024,
       min_imdb: 6,
       max_imdb: 7.8,
-      type: 'movie',
-      sort: 'latest',
+      type: "movie",
+      sort: "latest",
       page: 1,
-      ...params
+      ...params,
     };
 
     const queryString = new URLSearchParams(defaultParams as any).toString();
@@ -20,17 +21,17 @@ export const movieService = {
   },
 
   async getTrendingHindi() {
-    return this.getAdvancedSearch({ language: 'hindi' });
+    return this.getAdvancedSearch({ language: "hindi" });
   },
 
   async getHollywood() {
-    return this.getAdvancedSearch({ language: 'english' });
+    return this.getAdvancedSearch({ language: "english" });
   },
 
   async getPunjabi() {
-    return this.getAdvancedSearch({ 
-      language: 'punjabi', 
-      start_year: 2015 
+    return this.getAdvancedSearch({
+      language: "punjabi",
+      start_year: 2015,
     });
   },
 
@@ -39,7 +40,10 @@ export const movieService = {
     return await omdbFetch<OMDBSearchResponse>(`s=${query}`);
   },
 
-  async searchMovies(query: string): Promise<SearchResponse> {
-    return await rapidFetch<SearchResponse>(`search?title=${query}`);
-  }
+  async getMovieDetails(
+    imdbId: string,
+  ): Promise<OMDBMovieDetails | { Error: string; Response: string }> {
+    if (!imdbId) return { Error: "IMDb ID required", Response: "False" };
+    return await omdbFetch<OMDBMovieDetails>(`i=${imdbId}`);
+  },
 };

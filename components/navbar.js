@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 export const Navbar = ({ searchParams, children }) => {
   return (
-    <nav className="w-full border-b border-zinc-300/70 dark:border-white/[0.06] bg-zinc-100/90 backdrop-blur-xl backdrop-saturate-150 dark:bg-zinc-950/85">
+    <nav className="sticky top-0 z-50 w-full border-b border-zinc-300/70 dark:border-white/[0.06] bg-zinc-100/90 backdrop-blur-xl backdrop-saturate-150 dark:bg-zinc-950/85">
       <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-brand-primary/40 to-transparent opacity-60" />
 
       <div className="px-6 mx-auto max-w-screen-xl sm:px-10">
