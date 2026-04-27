@@ -32,19 +32,26 @@ export default async function MoviePage({ params }) {
     notFound();
   }
 
-  if (movie.Response === "False" || movie.Error) {
+  if (movie.error || !movie.id) {
     notFound();
   }
 
-  const rating = movie.imdbRating !== "N/A" ? movie.imdbRating : null;
-  const runtime = movie.Runtime !== "N/A" ? movie.Runtime : null;
-  const year = movie.Year;
-  const genres = movie.Genre?.split(", ").filter(Boolean) || [];
-  const actors = movie.Actors?.split(", ").filter(Boolean) || [];
-  const directors = movie.Director?.split(", ").filter(Boolean) || [];
-  const writers = movie.Writer?.split(", ").filter(Boolean) || [];
-  const languages = movie.Language?.split(", ").filter(Boolean) || [];
-  const countries = movie.Country?.split(", ").filter(Boolean) || [];
+  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
+  const runtime = movie.runtime ? `${movie.runtime} min` : null;
+  const year = movie.release_date ? movie.release_date.slice(0, 4) : null;
+  const genres = movie.genres?.map(g => g.name) || [];
+  
+  const cast = movie.credits?.cast || [];
+  const actors = cast.slice(0, 5).map(a => a.name);
+  
+  const crew = movie.credits?.crew || [];
+  const directors = crew.filter(c => c.job === "Director").map(c => c.name);
+  const writers = crew.filter(c => ["Screenplay", "Writer", "Story"].includes(c.job)).map(c => c.name);
+  
+  const languages = [movie.original_language].filter(Boolean);
+  const countries = movie.production_countries?.map(c => c.name) || [];
+  
+  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w780${movie.poster_path}` : null;
 
   return (
     <main className="min-h-[100dvh] bg-background px-6 py-12 lg:px-12 lg:py-24">
@@ -53,12 +60,10 @@ export default async function MoviePage({ params }) {
           {/* Left Column: Poster Image */}
           <div className="lg:col-span-4">
             <div className="sticky top-24 aspect-[2/3] w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-muted shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-              {movie.Poster && movie.Poster !== "N/A" ? (
+              {posterUrl ? (
                 <Image
-                  src={
-                    movie.Poster || "https://picsum.photos/seed/movie/400/600"
-                  }
-                  alt={movie.Title || "Poster"}
+                  src={posterUrl}
+                  alt={movie.title || "Poster"}
                   unoptimized
                   fill
                   className="object-cover"
@@ -78,14 +83,12 @@ export default async function MoviePage({ params }) {
             {/* Hero Header Section */}
             <div className="flex flex-col gap-6">
               <div className="flex flex-wrap gap-2">
-                {movie.Type && (
-                  <Badge
-                    variant="secondary"
-                    className="px-3 py-1 text-xs font-medium tracking-widest uppercase"
-                  >
-                    {movie.Type}
-                  </Badge>
-                )}
+                <Badge
+                  variant="secondary"
+                  className="px-3 py-1 text-xs font-medium tracking-widest uppercase"
+                >
+                  Movie
+                </Badge>
                 {year && (
                   <Badge
                     variant="outline"
@@ -116,12 +119,12 @@ export default async function MoviePage({ params }) {
               </div>
 
               <h1 className="text-5xl font-bold tracking-tighter leading-none text-foreground md:text-7xl">
-                {movie.Title}
+                {movie.title}
               </h1>
 
-              {movie.Plot && movie.Plot !== "N/A" && (
+              {movie.overview && (
                 <p className="max-w-[65ch] text-lg leading-relaxed text-muted-foreground md:text-xl">
-                  {movie.Plot}
+                  {movie.overview}
                 </p>
               )}
 
@@ -173,12 +176,10 @@ export default async function MoviePage({ params }) {
               <Card className="bg-secondary text-secondary-foreground md:col-span-2 rounded-[2.5rem] border-transparent shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
                 <CardHeader className="flex flex-col gap-1">
                   <CardDescription className="text-xs font-bold tracking-widest uppercase text-secondary-foreground/70">
-                    Accolades
+                    Status
                   </CardDescription>
                   <CardTitle className="text-lg font-medium tracking-tight leading-snug">
-                    {movie.Awards && movie.Awards !== "N/A"
-                      ? movie.Awards
-                      : "No notable awards"}
+                    {movie.status || "Released"}
                   </CardTitle>
                 </CardHeader>
               </Card>
@@ -213,7 +214,7 @@ export default async function MoviePage({ params }) {
                           Language
                         </span>
                         <span className="font-medium text-foreground">
-                          {languages.join(", ")}
+                          {languages.join(", ").toUpperCase()}
                         </span>
                       </div>
                     )}

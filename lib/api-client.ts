@@ -1,44 +1,25 @@
-export async function rapidFetch<T>(
-  endpoint: string,
-  options: RequestInit = {},
-): Promise<T> {
-  const url = `${process.env.RAPID_API_URL}${endpoint}`;
+import axios, { AxiosRequestConfig } from "axios";
 
-  const defaultOptions: RequestInit = {
+export async function tmdbFetch<T>(
+  endpoint: string,
+  options: AxiosRequestConfig = {},
+): Promise<T> {
+  const url = `${process.env.TMBD_API_URL || "https://api.themoviedb.org/3"}${endpoint}`;
+
+  const defaultOptions: AxiosRequestConfig = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": process.env.RAPIDAPI_KEY || "",
-      "X-RapidAPI-Host": process.env.RAPIDAPI_HOST || "",
+      Authorization: `Bearer ${process.env.TMBD_API_READ_TOKEN}`,
+      accept: "application/json",
     },
     ...options,
   };
 
   try {
-    const response = await fetch(url, defaultOptions);
-    if (!response.ok) {
-      throw new Error(`RapidAPI request failed: ${response.statusText}`);
-    }
-    return await response.json();
+    const response = await axios(url, defaultOptions);
+    return response.data;
   } catch (error) {
-    console.error("RapidAPI Fetch Error:", error);
-    throw error;
-  }
-}
-
-export async function omdbFetch<T>(
-  query: string,
-  options: RequestInit = {},
-): Promise<T> {
-  const url = `${process.env.OMBD_URL}?apikey=${process.env.OMBD_API_KEY}&${query}`;
-
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`OMDB request failed: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("OMDB Fetch Error:", error);
+    console.error("TMDB Axios Error:", error);
     throw error;
   }
 }

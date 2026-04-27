@@ -9,7 +9,7 @@ export async function Sugetions({ searchParams }) {
 
   try {
     const movies = await movieService.getSuggestions(search);
-    const results = movies?.Search;
+    const results = movies?.results;
 
     if (!results || results.length === 0) {
       return (
@@ -44,7 +44,7 @@ export async function Sugetions({ searchParams }) {
       >
         {results.slice(0, 8).map((movie, idx) => (
           <li
-            key={movie.imdbID}
+            key={movie.id}
             role="option"
             style={{ animationDelay: `${idx * 35}ms` }}
             className="
@@ -53,7 +53,7 @@ export async function Sugetions({ searchParams }) {
             "
           >
             <Link
-              href={`/${encodeURIComponent(movie.imdbID)}`}
+              href={`/${movie.id}`}
               className="
                 flex items-center gap-3
                 px-3 py-2.5
@@ -63,23 +63,21 @@ export async function Sugetions({ searchParams }) {
                 focus:outline-none focus-visible:bg-zinc-200 dark:focus-visible:bg-white/[0.06]
               "
             >
-              <span className="flex-shrink-0 text-[10px] font-medium text-amber-600/80 dark:text-amber-400/60 tabular-nums w-[3ch]">
-                {movie.Year?.slice(0, 4) ?? "—"}
+              <span className="flex-shrink-0 text-[10px] font-medium text-amber-600/80 dark:text-amber-400/60 tabular-nums w-[4ch]">
+                {movie.release_date?.slice(0, 4) ?? "—"}
               </span>
 
               <span className="flex-1 truncate leading-snug">
-                {movie.Title}
+                {movie.title}
               </span>
 
-              {movie.Type && (
-                <span className="
-                  flex-shrink-0 text-[9px] uppercase tracking-widest
-                  text-zinc-400 dark:text-white/20 group-hover:text-amber-600/70 dark:group-hover:text-amber-400/50
-                  transition-colors duration-200
-                ">
-                  {movie.Type}
-                </span>
-              )}
+              <span className="
+                flex-shrink-0 text-[9px] uppercase tracking-widest
+                text-zinc-400 dark:text-white/20 group-hover:text-amber-600/70 dark:group-hover:text-amber-400/50
+                transition-colors duration-200
+              ">
+                Movie
+              </span>
             </Link>
 
             <span className="

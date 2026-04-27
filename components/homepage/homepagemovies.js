@@ -1,7 +1,7 @@
 import { movieService } from "@/components/utils";
 import { HeroFeatured } from "./HeroFeatured";
 import { MovieSection } from "./MovieSection";
-import { BentoTeaser } from "./BentoTeaser";
+import { FooterSection } from "./FooterSection";
 
 export const Homepagemovies = async () => {
   return (
@@ -19,7 +19,7 @@ export const Homepagemovies = async () => {
           fetcher={() => movieService.getHollywood()}
         />
 
-        <BentoTeaser />
+        <FooterSection />
       </div>
     </main>
   );

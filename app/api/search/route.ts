@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const q = searchParams.get("suggetions");
 
   if (!q) {
-    return NextResponse.json({ Search: [] });
+    return NextResponse.json({ results: [] });
   }
 
   try {

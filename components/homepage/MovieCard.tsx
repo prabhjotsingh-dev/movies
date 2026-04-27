@@ -2,10 +2,11 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Play, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MovieResult } from "../types";
+import { TMDBMovie } from "../types";
+import Link from "next/link";
 
 interface MovieCardProps {
-  movie: MovieResult;
+  movie: TMDBMovie;
   index: number;
 }
 
@@ -22,7 +23,7 @@ export const MovieCard = ({ movie, index }: MovieCardProps) => {
         <Image
           className="object-cover transition-transform duration-1000 group-hover:scale-110"
           src={
-            movie.imageurl?.[0] || "https://picsum.photos/seed/movie/400/600"
+            movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://picsum.photos/seed/movie/400/600"
           }
           alt={movie.title || "Movie poster"}
           unoptimized
@@ -36,9 +37,11 @@ export const MovieCard = ({ movie, index }: MovieCardProps) => {
 
         <CardContent className="flex absolute inset-0 flex-col justify-end p-5 opacity-0 transition-all duration-500 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100">
           <div className="flex gap-2 mb-3">
-            <button className="flex justify-center items-center w-10 h-10 text-black bg-white rounded-full shadow-xl transition-transform hover:scale-110 active:scale-95">
-              <Play className="fill-current size-5" />
-            </button>
+            <Link href={`/${movie.id}`}>
+              <button className="flex justify-center items-center w-10 h-10 text-black bg-white rounded-full shadow-xl transition-transform hover:scale-110 active:scale-95">
+                <Play className="fill-current size-5" />
+              </button>
+            </Link>
             <button className="flex justify-center items-center w-10 h-10 text-white rounded-full transition-transform glass-morphism hover:scale-110 active:scale-95">
               <Info className="size-5" />
             </button>
@@ -49,7 +52,7 @@ export const MovieCard = ({ movie, index }: MovieCardProps) => {
           <div className="flex gap-2 items-center mt-1.5">
             <Star className="text-brand-accent size-3 fill-brand-accent" />
             <span className="font-mono text-[0.7rem] text-zinc-300 font-medium tracking-wider">
-              {movie.imdb_rating || "N/A"}
+              {movie.vote_average?.toFixed(1) || "N/A"}
             </span>
           </div>
         </CardContent>

@@ -9,7 +9,7 @@ import { Star } from "lucide-react";
 export const HeroFeatured = async () => {
   try {
     const movies = await movieService.getTrendingHindi();
-    const featured = movies.results.slice(0, 6);
+    const featured = movies.results?.slice(0, 6) || [];
 
     return (
       <section className="relative min-h-[70dvh] w-full py-12 px-6 lg:px-12 overflow-hidden bg-background">
@@ -46,15 +46,16 @@ export const HeroFeatured = async () => {
                 <CarouselContent className="-ml-4">
                   {featured.map((movie, i) => (
                     <CarouselItem
-                      key={movie.imdbid || i}
+                      key={movie.id || i}
                       className="pl-4 basis-full md:basis-1/2"
                     >
                       <Card className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] bg-transparent transition-all duration-500 hover:scale-[1.02] hover:border-white/20">
                         <div className="absolute inset-0 z-10 pointer-events-none rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-shadow duration-500 group-hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)]" />
                         <Image
                           src={
-                            movie.imageurl?.[0] ||
-                            "https://picsum.photos/seed/movie/800/1000"
+                            movie.poster_path
+                              ? `https://image.tmdb.org/t/p/w780${movie.poster_path}`
+                              : "https://picsum.photos/seed/movie/800/1000"
                           }
                           alt={movie.title || "Movie"}
                           unoptimized
@@ -77,7 +78,7 @@ export const HeroFeatured = async () => {
                             </Badge>
                             <span className="flex gap-1.5 items-center font-mono text-sm text-zinc-300">
                               <Star className="size-3.5 fill-brand-accent text-brand-accent" />{" "}
-                              {movie.imdb_rating || "7.8"}
+                              {movie.vote_average?.toFixed(1) || "NR"}
                             </span>
                           </div>
                         </CardContent>

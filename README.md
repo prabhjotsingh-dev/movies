@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎬 Movie Search App
 
-## Getting Started
+A simple and responsive movie search application built to explore and demonstrate frontend development skills. This app allows users to search for movies and view relevant details in real time.
 
-First, run the development server:
+> [!IMPORTANT]
+> **Important Note (For Users in India)**
+> Due to regional restrictions, TMDb may not be directly accessible in some locations. If you are cloning and running this project, configure a DNS service
+> **like:**
+>
+> - **Google Public DNS**
+> - **Cloudflare**
+> - **Or use a VPN.**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔍 Search movies by name (supports partial input)
+- ⚡ Real-time search results
+- 🎥 Display movie posters, titles, and basic info
+- 📱 Responsive design for different screen sizes
+- 🌐 Data fetched from The Movie Database (TMDb) API
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Next.js (React Framework)
+- Tailwind CSS
+- Axios for API requests
+- TMDb API (v3 / v4 authentication)
 
-## Learn More
+## 🔑 API Configuration
 
-To learn more about Next.js, take a look at the following resources:
+This project uses TMDb API for fetching movie data.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+You can use either:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **API Key (v3)** (basic usage)
+- **Read Access Token (v4)** (recommended for secure apps)
 
-## Deploy on Vercel
+👉 Get your API credentials from:
+[https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Installation & Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/prabhjotsingh-dev/movies.git
+   ```
+
+2. **Navigate to the project folder:**
+
+   ```bash
+   cd movies
+   ```
+
+3. **Add your TMDb API credentials:**
+   Create a `.env.local` file in the root directory and add:
+
+   ```env
+   TMBD_API_URL="https://api.themoviedb.org/3"
+   TMBD_API_READ_TOKEN="YOUR_ACCESS_TOKEN"
+   ```
+
+4. **Install Dependencies & Run the project:**
+   ```bash
+   npm install
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📄 License
+
+This project is for educational purposes and uses data from The Movie Database (TMDb).

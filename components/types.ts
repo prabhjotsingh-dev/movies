@@ -1,58 +1,34 @@
-export interface MovieResult {
-  imdbid: string;
+export interface TMDBMovie {
+  id: number;
   title: string;
-  imageurl: string[];
-  [key: string]: any;
+  original_title: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  release_date: string;
+  vote_average: number;
+  vote_count: number;
+  genre_ids: number[];
+  adult: boolean;
+  popularity: number;
+  original_language: string;
+  video: boolean;
 }
 
-export interface SearchResponse {
-  results: MovieResult[];
-  count: number;
-  [key: string]: any;
+export interface TMDBSearchResponse {
+  page: number;
+  results: TMDBMovie[];
+  total_pages: number;
+  total_results: number;
 }
 
-export interface OMDBMovie {
-  Title: string;
-  Year: string;
-  imdbID: string;
-  Type: string;
-  Poster: string;
-}
-
-export interface OMDBMovieDetails {
-  Title: string;
-  Year: string;
-  Rated: string;
-  Released: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Writer: string;
-  Actors: string;
-  Plot: string;
-  Language: string;
-  Country: string;
-  Awards: string;
-  Poster: string;
-  Ratings: {
-    Source: string;
-    Value: string;
-  }[];
-  Metascore: string;
-  imdbRating: string;
-  imdbVotes: string;
-  imdbID: string;
-  Type: string;
-  DVD: string;
-  BoxOffice: string;
-  Production: string;
-  Website: string;
-  Response: string;
-  Error?: string;
-}
-
-export interface OMDBSearchResponse {
-  Search?: OMDBMovie[];
-  totalResults?: string;
-  Response: string;
+export interface TMDBMovieDetails extends TMDBMovie {
+  budget: number;
+  genres: { id: number; name: string }[];
+  homepage: string | null;
+  imdb_id: string | null;
+  revenue: number;
+  runtime: number | null;
+  status: string;
+  tagline: string | null;
 }

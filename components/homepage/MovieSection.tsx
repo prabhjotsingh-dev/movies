@@ -6,11 +6,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { MovieCard } from "./MovieCard";
-import { SearchResponse } from "../types";
+import { TMDBSearchResponse } from "../types";
 
 interface MovieSectionProps {
   title: string;
-  fetcher: () => Promise<SearchResponse>;
+  fetcher: () => Promise<TMDBSearchResponse>;
   count?: number;
 }
 
@@ -22,8 +22,8 @@ export const MovieSection = async ({
   try {
     const movies = await fetcher();
     const results = movies.results
-      .filter((i) => i.imageurl && i.imageurl.length > 0)
-      .slice(0, count);
+      ?.filter((i) => i.poster_path)
+      .slice(0, count) || [];
 
     return (
       <section className="px-6 py-12 border-t lg:px-12 bg-background border-white/5">
@@ -44,7 +44,7 @@ export const MovieSection = async ({
             <CarouselContent className="-ml-4">
               {results.map((movie, i) => (
                 <CarouselItem
-                  key={movie.imdbid || i}
+                  key={movie.id || i}
                   className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5"
                 >
                   <MovieCard movie={movie} index={i} />

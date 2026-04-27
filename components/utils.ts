@@ -1,49 +1,48 @@
-import { rapidFetch, omdbFetch } from "../lib/api-client";
-import { OMDBSearchResponse, SearchResponse, OMDBMovieDetails } from "./types";
+import { tmdbFetch } from "../lib/api-client";
+import { TMDBSearchResponse, TMDBMovieDetails } from "./types";
 
 export const movieService = {
   async getAdvancedSearch(
     params: Record<string, string | number> = {},
-  ): Promise<SearchResponse> {
+  ): Promise<TMDBSearchResponse> {
     const defaultParams = {
-      start_year: 2022,
-      end_year: 2024,
-      min_imdb: 6,
-      max_imdb: 7.8,
-      type: "movie",
-      sort: "latest",
+      sort_by: "popularity.desc",
       page: 1,
       ...params,
     };
 
     const queryString = new URLSearchParams(defaultParams as any).toString();
-    return await rapidFetch<SearchResponse>(`advancedsearch?${queryString}`);
+    return await tmdbFetch<TMDBSearchResponse>(`/discover/movie?${queryString}`);
   },
 
   async getTrendingHindi() {
-    return this.getAdvancedSearch({ language: "hindi" });
+    return this.getAdvancedSearch({ with_original_language: "hi" });
   },
 
   async getHollywood() {
-    return this.getAdvancedSearch({ language: "english" });
+    return this.getAdvancedSearch({ with_original_language: "en" });
   },
 
   async getPunjabi() {
     return this.getAdvancedSearch({
-      language: "punjabi",
-      start_year: 2015,
+      with_original_language: "pa",
+      "primary_release_date.gte": "2015-01-01",
     });
   },
 
-  async getSuggestions(query: string): Promise<OMDBSearchResponse> {
-    if (!query) return { Search: [], Response: "False" };
-    return await omdbFetch<OMDBSearchResponse>(`s=${query}`);
+  async getSuggestions(query: string): Promise<TMDBSearchResponse> {
+    if (!query) return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    return await tmdbFetch<TMDBSearchResponse>(`/search/movie?query=${encodeURIComponent(query)}`);
   },
 
   async getMovieDetails(
-    imdbId: string,
-  ): Promise<OMDBMovieDetails | { Error: string; Response: string }> {
-    if (!imdbId) return { Error: "IMDb ID required", Response: "False" };
-    return await omdbFetch<OMDBMovieDetails>(`i=${imdbId}`);
+    id: string,
+  ): Promise<TMDBMovieDetails | { error: string }> {
+    if (!id) return { error: "ID required" };
+    try {
+      return await tmdbFetch<TMDBMovieDetails>(`/movie/${id}?append_to_response=credits,videos`);
+    } catch (e) {
+      return { error: "Failed to fetch movie details" };
+    }
   },
 };
