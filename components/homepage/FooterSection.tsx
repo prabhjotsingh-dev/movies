@@ -1,68 +1,87 @@
 import { Badge } from "@/components/ui/badge";
-import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export const FooterSection = () => {
   return (
-    <section className="px-6 py-20 border-t lg:px-12 bg-zinc-950 border-white/5">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 relative aspect-video md:aspect-auto overflow-hidden rounded-[2.5rem] glass-morphism p-12 flex flex-col justify-end group">
-          <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/theatre/1200/800')] bg-cover bg-center opacity-20 group-hover:scale-105 transition-transform duration-700" />
-          <div className="relative z-10 space-y-4">
-            <Badge className="text-emerald-500 bg-emerald-500/10 border-emerald-500/20">
+    <section className="px-6 py-10 border-t lg:px-12 bg-background border-border">
+      <div className="grid grid-cols-1 gap-6 mx-auto max-w-full md:grid-cols-3">
+        <Card className="md:col-span-2 relative aspect-auto md:aspect-auto overflow-hidden rounded-[2.5rem] bg-card/50 glass-morphism border-border p-0 flex flex-col justify-end group shadow-none">
+          <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/theatre/1200/800')] bg-cover bg-center opacity-40 dark:opacity-20 group-hover:scale-105 transition-transform duration-700" />
+          <div className="absolute inset-0 rounded-[2.5rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] pointer-events-none" />
+          <CardHeader className="relative z-10 p-12 mt-auto space-y-4">
+            <Badge className="text-emerald-600 bg-emerald-500/10 border-emerald-500/20 dark:text-emerald-400 w-fit">
               Now Streaming
             </Badge>
-            <h3 className="text-4xl font-bold tracking-tighter">
-              Premium Theater <br />
-              Experience at Home
-            </h3>
-            <p className="text-zinc-400 max-w-[40ch]">
+            <CardTitle className="text-4xl font-bold tracking-tighter text-foreground">
+              Premium Theater Experience at Home
+            </CardTitle>
+            <CardDescription className="text-base text-muted-foreground max-w-[40ch]">
               Ultra-HD streaming with Dolby Atmos. Feel every heartbeat of the
               cinema.
-            </p>
-          </div>
-        </div>
-        <div className="relative aspect-square md:aspect-auto overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-white/10 p-10 flex flex-col justify-between group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]">
-          <div className="absolute inset-0 bg-gradient-to-br to-transparent opacity-0 transition-opacity duration-700 pointer-events-none from-white/5 group-hover:opacity-100" />
-          <div className="absolute inset-0 rounded-[2.5rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] pointer-events-none" />
+            </CardDescription>
+          </CardHeader>
+        </Card>
 
-          <div className="relative z-10 space-y-6">
-            <div>
-              <h3 className="text-3xl font-bold tracking-tighter text-white">
+        <Card className="relative overflow-hidden rounded-[2.5rem] bg-card border-border p-0 flex flex-col justify-between group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]">
+          <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/theatre/1200/800')] bg-cover bg-center opacity-40 dark:opacity-20 group-hover:scale-105 transition-transform duration-700" />
+          <div className="absolute inset-0 rounded-[2.5rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] pointer-events-none" />
+          <div className="flex relative z-10 flex-col justify-between h-full">
+            <CardHeader className="p-10 pb-0 space-y-2">
+              <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
                 Get in touch
-              </h3>
-              <p className="mt-2 text-zinc-400 text-sm leading-relaxed max-w-[25ch]">
-                Our team is available.
-              </p>
-            </div>
-
-            <div className="pt-4 space-y-4 border-t border-white/10">
-              <a
-                href="mailto:hello@cinemapro.studio"
-                className="flex gap-3 items-center text-sm font-medium transition-colors text-zinc-300 hover:text-white group/link"
-              >
-                <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center group-hover/link:bg-zinc-700 transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                  <Mail className="size-3.5" />
+              </CardTitle>
+            </CardHeader>
+            <div className="mx-4 mt-2 border-t border-border"></div>
+            <CardContent className="p-10 pt-8 space-y-3">
+              <div className="flex flex-row gap-2">
+                <div className="flex justify-center items-center rounded-xl transition-colors size-10 shrink-0 bg-muted text-muted-foreground group-hover/link:bg-foreground group-hover/link:text-background">
+                  <Mail className="size-4" />
                 </div>
-                hello@example.mail
-              </a>
-              <a
-                href="tel:+13128471928"
-                className="flex gap-3 items-center text-sm font-medium transition-colors text-zinc-300 hover:text-white group/link"
-              >
-                <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center group-hover/link:bg-zinc-700 transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                  <Phone className="size-3.5" />
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
+                    Email
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    hello@cinemapro.studio
+                  </span>
                 </div>
-                +1 (123) 456-7890
-              </a>
-              <div className="flex gap-3 items-center text-sm font-medium cursor-default text-zinc-300 group/link">
-                <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                  <MapPin className="size-3.5" />
-                </div>
-                123 Example Street, City, State, 123456
               </div>
-            </div>
+              <div className="flex flex-row gap-2">
+                <div className="flex justify-center items-center rounded-xl transition-colors size-10 shrink-0 bg-muted text-muted-foreground group-hover/link:bg-foreground group-hover/link:text-background">
+                  <Phone className="size-4" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
+                    Phone
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    +1 (312) 847-1928
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-row gap-2">
+                <div className="flex justify-center items-center rounded-xl transition-colors size-10 shrink-0 bg-muted text-muted-foreground group-hover/link:bg-foreground group-hover/link:text-background">
+                  <MapPin className="size-4" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
+                    Location
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    123 Cinema Ave, NY 10012
+                  </span>
+                </div>
+              </div>
+            </CardContent>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   );

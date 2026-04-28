@@ -1,19 +1,22 @@
-"use client"
+"use client";
 
-import Autoplay from "embla-carousel-autoplay"
-import { Carousel } from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay";
+import { Carousel } from "@/components/ui/carousel";
 
-export const FUllcarousel = ({ children , className }) => {
-return <Carousel className={`${className}`}
-    opts={{
-        loop:true,
-    }}
-    plugins={[
+export const AutoplayCarousel = ({ children, className }) => {
+  return (
+    <Carousel
+      className={`${className}`}
+      opts={{
+        loop: true,
+      }}
+      plugins={[
         Autoplay({
-        delay: 2000,
+          delay: 2000,
         }),
-    ]}
->
-    {children}
-</Carousel>
-}
+      ]}
+    >
+      {children}
+    </Carousel>
+  );
+};
