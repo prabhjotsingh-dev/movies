@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { Search } from "lucide-react";
 
-export const Input = ({ children }) => {
+export const SearchInput = ({ children }) => {
   const router = useRouter();
   const inputRef = useRef();
   const [isFocused, setIsFocused] = useState(false);
@@ -58,12 +58,12 @@ export const Input = ({ children }) => {
             handleChange(e);
           }}
           className="
-            w-40 sm:w-52 bg-transparent border-none outline-none
+            w-9 sm:w-52 bg-transparent border-none outline-none
             text-sm text-zinc-800 dark:text-white placeholder-zinc-400 dark:placeholder-white/25
             [&::-webkit-search-cancel-button]:hidden
             [&::-webkit-search-decoration]:hidden
             transition-all duration-300
-            focus:w-52 sm:focus:w-64
+            focus:w-11 sm:focus:w-64
           "
           style={{ transition: "width 0.4s cubic-bezier(0.16,1,0.3,1)" }}
         />

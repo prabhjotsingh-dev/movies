@@ -1,6 +1,7 @@
-import { Input } from "./searchinput";
+import { SearchInput } from "./searchinput";
 import { ModeToggle } from "../comman/theme/themeToggleButton";
 import { Suspense } from "react";
+import Link from "next/link";
 
 export const Navbar = ({ searchParams, children }) => {
   return (
@@ -9,7 +10,7 @@ export const Navbar = ({ searchParams, children }) => {
 
       <div className="px-6 mx-auto max-w-screen-xl sm:px-10">
         <div className="flex gap-6 justify-between items-center h-16">
-          <a
+          <Link
             id="home"
             href="/"
             className="flex gap-3 items-center no-underline select-none group"
@@ -17,7 +18,7 @@ export const Navbar = ({ searchParams, children }) => {
             <span
               aria-hidden="true"
               className="
-                flex flex-col gap-[3px]
+                hidden sm:flex flex-col gap-[3px]
                 opacity-50 group-hover:opacity-100
                 transition-opacity duration-300
               "
@@ -47,7 +48,7 @@ export const Navbar = ({ searchParams, children }) => {
             <span className="hidden sm:block text-[0.6rem] tracking-[0.22em] uppercase text-zinc-400 dark:text-white/30 font-medium leading-none">
               Cinema&nbsp;DB
             </span>
-          </a>
+          </Link>
 
           <div className="flex gap-3 items-center">
             <Suspense
@@ -55,10 +56,10 @@ export const Navbar = ({ searchParams, children }) => {
                 <div className="w-48 h-9 rounded-lg animate-pulse bg-zinc-200 dark:bg-white/10" />
               }
             >
-              <Input>{children}</Input>
+              <SearchInput>{children}</SearchInput>
             </Suspense>
 
-            <span className="w-px h-5 bg-zinc-300 dark:bg-white/10" />
+            <span className="hidden w-px h-5 sm:block bg-zinc-300 dark:bg-white/10" />
 
             <div className="opacity-70 transition-opacity duration-200 hover:opacity-100">
               <ModeToggle />

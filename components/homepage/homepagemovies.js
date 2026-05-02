@@ -8,11 +8,23 @@ export const Homepagemovies = async () => {
     <main className="min-h-screen bg-background">
       <HeroFeatured />
 
-      <div className="space-y-0">
+      <div className="flex flex-col gap-8">
         <MovieSection
           title="Punjabi Originals"
           fetcher={() => movieService.getPunjabi()}
         />
+        <MovieSection
+          title="Hindi Originals"
+          fetcher={() => movieService.getHindi()}
+        />
+        {/* <MovieSection
+          title="Punjabi Originals"
+          fetcher={() => movieService.getPunjabi()}
+        />
+        <MovieSection
+          title="Punjabi Originals"
+          fetcher={() => movieService.getPunjabi()}
+        /> */}
 
         <MovieSection
           title="Hollywood Hits"

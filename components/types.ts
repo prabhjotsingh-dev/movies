@@ -32,15 +32,3 @@ export interface TMDBMovieDetails extends TMDBMovie {
   status: string;
   tagline: string | null;
 }
-
-export const Langauges = {
-  pa: "PUNJABI",
-  hi: "HINDI",
-  en: "ENGLISH",
-  ar: "ARABIC",
-  fr: "FRENCH",
-  es: "SPANISH",
-  zh: "CHINESE",
-  ja: "JAPANESE",
-  ko: "KOREAN",
-};

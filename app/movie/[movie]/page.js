@@ -39,19 +39,23 @@ export default async function MoviePage({ params }) {
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
   const runtime = movie.runtime ? `${movie.runtime} min` : null;
   const year = movie.release_date ? movie.release_date.slice(0, 4) : null;
-  const genres = movie.genres?.map(g => g.name) || [];
-  
+  const genres = movie.genres?.map((g) => g.name) || [];
+
   const cast = movie.credits?.cast || [];
-  const actors = cast.slice(0, 5).map(a => a.name);
-  
+  const actors = cast.slice(0, 5).map((a) => a.name);
+
   const crew = movie.credits?.crew || [];
-  const directors = crew.filter(c => c.job === "Director").map(c => c.name);
-  const writers = crew.filter(c => ["Screenplay", "Writer", "Story"].includes(c.job)).map(c => c.name);
-  
+  const directors = crew.filter((c) => c.job === "Director").map((c) => c.name);
+  const writers = crew
+    .filter((c) => ["Screenplay", "Writer", "Story"].includes(c.job))
+    .map((c) => c.name);
+
   const languages = [movie.original_language].filter(Boolean);
-  const countries = movie.production_countries?.map(c => c.name) || [];
-  
-  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w780${movie.poster_path}` : null;
+  const countries = movie.production_countries?.map((c) => c.name) || [];
+
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w780${movie.poster_path}`
+    : null;
 
   return (
     <main className="min-h-[100dvh] bg-background px-6 py-12 lg:px-12 lg:py-24">
@@ -59,7 +63,7 @@ export default async function MoviePage({ params }) {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Left Column: Poster Image */}
           <div className="lg:col-span-4">
-            <div className="sticky top-24 aspect-[2/3] w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-muted shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+            <div className="sticky top-24 aspect-[2/3] overflow-hidden rounded-[2.5rem] border border-white/10 bg-muted shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
               {posterUrl ? (
                 <Image
                   src={posterUrl}

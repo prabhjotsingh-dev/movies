@@ -2,9 +2,11 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Play, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Langauges, TMDBMovie } from "../types";
+import { TMDBMovie } from "../types";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Langauges } from "@/comman/constant";
+import routes from "@/comman/routes";
 
 interface MovieCardProps {
   movie: TMDBMovie;
@@ -12,6 +14,7 @@ interface MovieCardProps {
   showLanguage?: boolean;
   showPlayAndDetails?: boolean;
   AllwaysShowNameAndRating?: boolean;
+  useBackdropPathForPoster?: boolean;
 }
 
 export const MovieCard = ({
@@ -20,6 +23,7 @@ export const MovieCard = ({
   showLanguage = true,
   showPlayAndDetails = true,
   AllwaysShowNameAndRating = false,
+  useBackdropPathForPoster = false,
 }: MovieCardProps) => {
   const showNameAndRating = AllwaysShowNameAndRating
     ? "opacity-100"
@@ -32,36 +36,34 @@ export const MovieCard = ({
       )}
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      <Link href={`/${movie.id}`}>
-        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl transition-colors duration-500 group-hover:border-white/20">
-          <Image
-            className="object-cover transition-transform duration-1000 group-hover:scale-110"
-            src={
-              movie.poster_path
-                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                : "https://picsum.photos/seed/movie/400/600"
-            }
-            alt={movie.title || "Movie poster"}
-            unoptimized
-            fill
-          />
+      <div className={`relative w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl transition-colors duration-500 group-hover:border-white/20 ${useBackdropPathForPoster ? 'aspect-video' : 'aspect-[2/3]'}`}>
+        <Image
+          className="object-cover transition-transform duration-1000 group-hover:scale-110"
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${useBackdropPathForPoster ? movie.backdrop_path : movie.poster_path}`
+              : "https://picsum.photos/seed/movie/400/600"
+          }
+          alt={movie.title || "Movie poster"}
+          unoptimized
+          fill
+        />
 
-          <div className="absolute inset-0 bg-gradient-to-t to-transparent opacity-60 transition-opacity duration-500 from-zinc-950 via-zinc-950/40 group-hover:opacity-100" />
-          <div className="absolute inset-0 bg-gradient-to-tr via-transparent to-transparent opacity-0 transition-opacity duration-500 from-brand-primary/20 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t to-transparent opacity-60 transition-opacity duration-500 from-zinc-950 via-zinc-950/40 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-tr via-transparent to-transparent opacity-0 transition-opacity duration-500 from-brand-primary/20 group-hover:opacity-100" />
 
-          <div className="absolute inset-0 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-shadow duration-500 group-hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)]" />
+        <div className="absolute inset-0 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-shadow duration-500 group-hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)]" />
 
+        <Link href={routes.movie(movie.id.toString())}>
           <CardContent
             className={`flex absolute inset-0 flex-col justify-end p-5 ${showNameAndRating}`}
           >
             {showPlayAndDetails ? (
               <>
                 <div className="flex gap-2 mb-3">
-                  <Link href={`/${movie.id}`}>
-                    <button className="flex justify-center items-center w-10 h-10 text-black bg-white rounded-full shadow-xl transition-transform hover:scale-110 active:scale-95">
-                      <Play className="fill-current size-5" />
-                    </button>
-                  </Link>
+                  <button className="flex justify-center items-center w-10 h-10 text-black bg-white rounded-full shadow-xl transition-transform hover:scale-110 active:scale-95">
+                    <Play className="fill-current size-5" />
+                  </button>
                   <button className="flex justify-center items-center w-10 h-10 text-white rounded-full transition-transform glass-morphism hover:scale-110 active:scale-95">
                     <Info className="size-5" />
                   </button>
@@ -90,8 +92,8 @@ export const MovieCard = ({
               </span>
             </div>
           </CardContent>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </Card>
   );
 };

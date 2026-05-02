@@ -1,6 +1,7 @@
 import { tmdbFetch } from "../lib/api-client";
 import { TMDBSearchResponse, TMDBMovieDetails } from "./types";
-
+import { Langauges } from "../comman/constant";
+//https://api.themoviedb.org/3/trending/movie/week
 export const movieService = {
   async getAdvancedSearch(
     params: Record<string, string | number> = {},
@@ -12,10 +13,12 @@ export const movieService = {
     };
 
     const queryString = new URLSearchParams(defaultParams as any).toString();
-    return await tmdbFetch<TMDBSearchResponse>(`/discover/movie?${queryString}`);
+    return await tmdbFetch<TMDBSearchResponse>(
+      `/discover/movie?${queryString}`,
+    );
   },
 
-  async getTrendingHindi() {
+  async getHindi() {
     return this.getAdvancedSearch({ with_original_language: "hi" });
   },
 
@@ -26,13 +29,15 @@ export const movieService = {
   async getPunjabi() {
     return this.getAdvancedSearch({
       with_original_language: "pa",
-      "primary_release_date.gte": "2015-01-01",
     });
   },
 
   async getSuggestions(query: string): Promise<TMDBSearchResponse> {
-    if (!query) return { page: 1, results: [], total_pages: 0, total_results: 0 };
-    return await tmdbFetch<TMDBSearchResponse>(`/search/movie?query=${encodeURIComponent(query)}`);
+    if (!query)
+      return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    return await tmdbFetch<TMDBSearchResponse>(
+      `/search/movie?query=${encodeURIComponent(query)}`,
+    );
   },
 
   async getMovieDetails(
@@ -40,9 +45,23 @@ export const movieService = {
   ): Promise<TMDBMovieDetails | { error: string }> {
     if (!id) return { error: "ID required" };
     try {
-      return await tmdbFetch<TMDBMovieDetails>(`/movie/${id}?append_to_response=credits,videos`);
+      return await tmdbFetch<TMDBMovieDetails>(
+        `/movie/${id}?append_to_response=credits,videos`,
+      );
     } catch (e) {
       return { error: "Failed to fetch movie details" };
     }
   },
+};
+
+export const getTradingMovies = async (
+  timeWindow: "day" | "week",
+  mediaType: "movie" | "tv" | "all",
+  language?: string,
+  page?: number,
+) => {
+  const response = await tmdbFetch<TMDBSearchResponse>(
+    `/trending/${mediaType}/${timeWindow}?language=${language}&page=${page}`,
+  );
+  return response;
 };
