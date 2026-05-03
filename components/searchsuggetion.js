@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { movieService } from "@/components/utils";
 import { Film } from "lucide-react";
+import routes from "@/comman/routes";
 
 export async function Sugetions({ searchParams }) {
   const search = searchParams?.suggetions;
@@ -22,8 +23,14 @@ export async function Sugetions({ searchParams }) {
             shadow-[0_8px_32px_-4px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.6)] dark:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.06)]
           "
         >
-          <Film size={18} strokeWidth={1.5} className="text-zinc-400 dark:text-white/20" />
-          <p className="text-xs text-zinc-500 dark:text-white/30 tracking-wide">No results for "{search}"</p>
+          <Film
+            size={18}
+            strokeWidth={1.5}
+            className="text-zinc-400 dark:text-white/20"
+          />
+          <p className="text-xs tracking-wide text-zinc-500 dark:text-white/30">
+            No results for "{search}"
+          </p>
         </div>
       );
     }
@@ -53,7 +60,7 @@ export async function Sugetions({ searchParams }) {
             "
           >
             <Link
-              href={`/${movie.id}`}
+              href={routes.movie(movie.id)}
               className="
                 flex items-center gap-3
                 px-3 py-2.5
@@ -67,25 +74,20 @@ export async function Sugetions({ searchParams }) {
                 {movie.release_date?.slice(0, 4) ?? "—"}
               </span>
 
-              <span className="flex-1 truncate leading-snug">
+              <span className="flex-1 leading-snug truncate">
                 {movie.title}
               </span>
 
-              <span className="
+              <span
+                className="
                 flex-shrink-0 text-[9px] uppercase tracking-widest
                 text-zinc-400 dark:text-white/20 group-hover:text-amber-600/70 dark:group-hover:text-amber-400/50
                 transition-colors duration-200
-              ">
+              "
+              >
                 Movie
               </span>
             </Link>
-
-            <span className="
-              absolute left-0 top-2 bottom-2 w-[2px] rounded-r
-              bg-amber-500 dark:bg-amber-400
-              scale-y-0 group-hover:scale-y-100
-              transition-transform duration-200 origin-top
-            " />
           </li>
         ))}
       </ul>
@@ -103,8 +105,10 @@ export async function Sugetions({ searchParams }) {
           shadow-[0_8px_32px_-4px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_-4px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)]
         "
       >
-        <span className="block h-1.5 w-1.5 rounded-full bg-red-500 dark:bg-red-400 flex-shrink-0" />
-        <p className="text-xs text-red-600 dark:text-red-400/70">Could not load suggestions</p>
+        <span className="block flex-shrink-0 w-1.5 h-1.5 bg-red-500 rounded-full dark:bg-red-400" />
+        <p className="text-xs text-red-600 dark:text-red-400/70">
+          Could not load suggestions
+        </p>
       </div>
     );
   }

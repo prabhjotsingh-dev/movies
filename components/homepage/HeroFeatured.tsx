@@ -1,12 +1,17 @@
 import { AutoplayCarousel } from "../fullscreencarousel";
 import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { getTradingMovies, movieService } from "@/components/utils";
+import { movieService } from "@/components/utils";
 import { Badge } from "@/components/ui/badge";
 import { MovieCard } from "./MovieCard";
 
 export const HeroFeatured = async () => {
   try {
-    const movies = await getTradingMovies("week", "movie", "hi-IN", 1);
+    const movies = await movieService.getTradingMovies(
+      "week",
+      "movie",
+      "hi-IN",
+      1,
+    );
     const featured = movies.results?.slice(0, 6) || [];
 
     return (

@@ -1,21 +1,31 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import debounce from "lodash.debounce";
 import { Search } from "lucide-react";
 
 export const SearchInput = ({ children }) => {
   const router = useRouter();
-  const inputRef = useRef();
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
+  const [hasValue, setHasValue] = useState("");
 
   const handleChange = debounce((e) => {
     const val = e.target.value;
-    setHasValue(val.length > 0);
+    setHasValue(val);
     router.push(`?suggetions=${val}`);
-  }, 400);
+  }, 500);
 
+  useEffect(() => {
+    if (hasValue && isFocused) {
+      router.push(`?suggetions=${hasValue}`);
+    }
+    if (!isFocused) {
+      const timeoutId = setTimeout(() => {
+        router.push("?suggetions=");
+      }, 50);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isFocused]);
   return (
     <div className="flex relative flex-col">
       <div
@@ -46,7 +56,6 @@ export const SearchInput = ({ children }) => {
         />
 
         <input
-          ref={inputRef}
           id="search-input"
           type="search"
           autoComplete="off"
@@ -54,16 +63,16 @@ export const SearchInput = ({ children }) => {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onChange={(e) => {
-            setHasValue(e.target.value.length > 0);
+            setHasValue(e.target.value);
             handleChange(e);
           }}
           className="
-            w-9 sm:w-52 bg-transparent border-none outline-none
+            w-auto sm:w-52 bg-transparent border-none outline-none
             text-sm text-zinc-800 dark:text-white placeholder-zinc-400 dark:placeholder-white/25
             [&::-webkit-search-cancel-button]:hidden
             [&::-webkit-search-decoration]:hidden
             transition-all duration-300
-            focus:w-11 sm:focus:w-64
+            focus:w-auto sm:focus:w-64
           "
           style={{ transition: "width 0.4s cubic-bezier(0.16,1,0.3,1)" }}
         />

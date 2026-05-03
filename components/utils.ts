@@ -1,6 +1,5 @@
 import { tmdbFetch } from "../lib/api-client";
-import { TMDBSearchResponse, TMDBMovieDetails } from "./types";
-import { Langauges } from "../comman/constant";
+import { TMDBSearchResponse, IFullMovieDetails } from "./types";
 //https://api.themoviedb.org/3/trending/movie/week
 export const movieService = {
   async getAdvancedSearch(
@@ -42,26 +41,26 @@ export const movieService = {
 
   async getMovieDetails(
     id: string,
-  ): Promise<TMDBMovieDetails | { error: string }> {
+  ): Promise<IFullMovieDetails | { error: string }> {
     if (!id) return { error: "ID required" };
     try {
-      return await tmdbFetch<TMDBMovieDetails>(
+      return await tmdbFetch<IFullMovieDetails>(
         `/movie/${id}?append_to_response=credits,videos`,
       );
     } catch (e) {
       return { error: "Failed to fetch movie details" };
     }
   },
-};
 
-export const getTradingMovies = async (
-  timeWindow: "day" | "week",
-  mediaType: "movie" | "tv" | "all",
-  language?: string,
-  page?: number,
-) => {
-  const response = await tmdbFetch<TMDBSearchResponse>(
-    `/trending/${mediaType}/${timeWindow}?language=${language}&page=${page}`,
-  );
-  return response;
+  async getTradingMovies(
+    timeWindow: "day" | "week",
+    mediaType: "movie" | "tv" | "all",
+    language?: string,
+    page?: number,
+  ): Promise<TMDBSearchResponse> {
+    const response = await tmdbFetch<TMDBSearchResponse>(
+      `/trending/${mediaType}/${timeWindow}?language=${language}&page=${page}`,
+    );
+    return response;
+  },
 };

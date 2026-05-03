@@ -1,3 +1,5 @@
+export const defaultImagePath = "https://picsum.photos/seed/movie/400/600";
+
 export const genres = [
   { id: 28, name: "Action" },
   { id: 12, name: "Adventure" },
