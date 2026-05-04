@@ -11,23 +11,26 @@ export const Homepagemovies = async () => {
       <div className="flex flex-col gap-8">
         <MovieSection
           title="Punjabi Originals"
+          language="Punjabi"
           fetcher={() => movieService.getPunjabi()}
         />
         <MovieSection
           title="Hindi Originals"
+          language="Hindi"
           fetcher={() => movieService.getHindi()}
         />
         {/* <MovieSection
-          title="Punjabi Originals"
+          language="Punjabi Originals"
           fetcher={() => movieService.getPunjabi()}
         />
         <MovieSection
-          title="Punjabi Originals"
+          language="Punjabi Originals"
           fetcher={() => movieService.getPunjabi()}
         /> */}
 
         <MovieSection
           title="Hollywood Hits"
+          language="English"
           fetcher={() => movieService.getHollywood()}
         />
 

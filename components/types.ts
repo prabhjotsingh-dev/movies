@@ -94,3 +94,16 @@ export interface IFullMovieDetails {
     }[];
   };
 }
+
+export interface DiscoverParams {
+  page?: number;
+  sort_by?: string;
+  with_genres?: number[] | string;
+  with_original_language?: string;
+  primary_release_year?: number | string;
+  "vote_average.gte"?: number;
+  "vote_count.gte"?: number;
+  with_watch_providers?: number[] | string;
+  watch_region?: string;
+  [key: string]: any;
+}

@@ -22,14 +22,14 @@ export const genres = [
   { id: 37, name: "Western" },
 ];
 
-export const Langauges = {
-  pa: "PUNJABI",
-  hi: "HINDI",
-  en: "ENGLISH",
-  ar: "ARABIC",
-  fr: "FRENCH",
-  es: "SPANISH",
-  zh: "CHINESE",
-  ja: "JAPANESE",
-  ko: "KOREAN",
-};
+export const Langauges = [
+  { code: "pa", name: "PUNJABI" },
+  { code: "hi", name: "HINDI" },
+  { code: "en", name: "ENGLISH" },
+  { code: "ar", name: "ARABIC" },
+  { code: "fr", name: "FRENCH" },
+  { code: "es", name: "SPANISH" },
+  { code: "zh", name: "CHINESE" },
+  { code: "ja", name: "JAPANESE" },
+  { code: "ko", name: "KOREAN" },
+];

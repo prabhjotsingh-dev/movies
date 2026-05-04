@@ -1,5 +1,5 @@
 import { SearchInput } from "./searchinput";
-import { ModeToggle } from "../comman/theme/themeToggleButton";
+import { ModeToggle } from "../../comman/theme/themeToggleButton";
 import { Suspense } from "react";
 import Link from "next/link";
 

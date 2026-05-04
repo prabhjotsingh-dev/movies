@@ -3,6 +3,8 @@ import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { movieService } from "@/components/utils";
 import { Badge } from "@/components/ui/badge";
 import { MovieCard } from "./MovieCard";
+import Link from "next/link";
+import routes from "@/comman/routes";
 
 export const HeroFeatured = async () => {
   try {
@@ -63,13 +65,21 @@ export const HeroFeatured = async () => {
         </section>
         <div className="px-4 w-full">
           <div>
-            <button className="py-3 pl-8 w-full font-semibold rounded-full border transition-all border-foreground text-end hover:bg-white/5">
-              <span className="block ml-auto w-1/2 text-center">
+            <button className="w-full font-semibold rounded-full border transition-all border-foreground text-end hover:bg-white/5">
+              <Link
+                href={routes.filters}
+                className="block py-3 pl-8 ml-auto w-1/2 h-full text-center"
+              >
                 Custom filter
-              </span>
+              </Link>
             </button>
             <button className="absolute left-4 py-3 pr-8 w-1/2 font-semibold rounded-full border transition-all border-foreground bg-foreground text-background hover:opacity-80">
-              <span className="relative left-4">Top Rated</span>
+              <Link
+                href={routes.filters}
+                className="relative left-4 w-full h-full"
+              >
+                Top Rated
+              </Link>
             </button>
           </div>
         </div>

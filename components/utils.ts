@@ -1,33 +1,52 @@
+import { Langauges } from "@/comman/constant";
 import { tmdbFetch } from "../lib/api-client";
-import { TMDBSearchResponse, IFullMovieDetails } from "./types";
-//https://api.themoviedb.org/3/trending/movie/week
+import { TMDBSearchResponse, IFullMovieDetails, DiscoverParams } from "./types";
+
 export const movieService = {
   async getAdvancedSearch(
-    params: Record<string, string | number> = {},
+    params: DiscoverParams = {},
   ): Promise<TMDBSearchResponse> {
-    const defaultParams = {
+    const defaultParams: DiscoverParams = {
       sort_by: "popularity.desc",
       page: 1,
       ...params,
     };
 
-    const queryString = new URLSearchParams(defaultParams as any).toString();
+    const queryParams = new URLSearchParams();
+
+    Object.entries(defaultParams).forEach(([key, value]) => {
+      if (value === undefined || value === null || value === "") return;
+
+      if (Array.isArray(value)) {
+        queryParams.append(key, value.join(","));
+      } else {
+        queryParams.append(key, String(value));
+      }
+    });
+
     return await tmdbFetch<TMDBSearchResponse>(
-      `/discover/movie?${queryString}`,
+      `/discover/movie?${queryParams.toString()}`,
     );
   },
 
-  async getHindi() {
-    return this.getAdvancedSearch({ with_original_language: "hi" });
+  async getHindi(extraParams?: DiscoverParams) {
+    return this.getAdvancedSearch({
+      with_original_language: "hi",
+      ...extraParams,
+    });
   },
 
-  async getHollywood() {
-    return this.getAdvancedSearch({ with_original_language: "en" });
+  async getHollywood(extraParams?: DiscoverParams) {
+    return this.getAdvancedSearch({
+      with_original_language: "en",
+      ...extraParams,
+    });
   },
 
-  async getPunjabi() {
+  async getPunjabi(extraParams?: DiscoverParams) {
     return this.getAdvancedSearch({
       with_original_language: "pa",
+      ...extraParams,
     });
   },
 
@@ -55,12 +74,39 @@ export const movieService = {
   async getTradingMovies(
     timeWindow: "day" | "week",
     mediaType: "movie" | "tv" | "all",
-    language?: string,
-    page?: number,
+    language: string = "en-US",
+    page: number = 1,
   ): Promise<TMDBSearchResponse> {
-    const response = await tmdbFetch<TMDBSearchResponse>(
-      `/trending/${mediaType}/${timeWindow}?language=${language}&page=${page}`,
-    );
-    return response;
+    const url = `/trending/${mediaType}/${timeWindow}?language=${language}&page=${page}`;
+    return await tmdbFetch<TMDBSearchResponse>(url);
   },
 };
+
+export function GetLanguageCode(language: string) {
+  const lang = language.trim().toUpperCase();
+  if (!lang || lang === "All") return undefined;
+  if (lang.length === 2) {
+    const found = Langauges.find((item) => item.code === lang.toLowerCase());
+    if (found) return found.code;
+  }
+  const found = Langauges.find((item) => item.name === lang);
+  if (!found) return undefined;
+  return found?.code;
+}
+
+export function GetLanguageName(language: string) {
+  const lang = language.trim().toUpperCase();
+  if (!lang || lang === "All") return undefined;
+  if (lang.length === 2) {
+    const found = Langauges.find((item) => item.code === lang.toLowerCase());
+    if (found) return found.name;
+  }
+  const found = Langauges.find((item) => item.name === lang);
+  if (!found) return undefined;
+  return found?.name;
+}
+
+export function GetProperCase(value: string) {
+  if (!value) return "";
+  return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+}

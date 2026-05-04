@@ -5,6 +5,9 @@ export const metadata = {
   description: "SEARCH ANY MOVIE",
 };
 
+import { Suspense } from "react";
+import { NavbarWrapper } from "@/components/navbar/NavbarWrapper";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -15,6 +18,9 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
+          <Suspense fallback={null}>
+            <NavbarWrapper />
+          </Suspense>
           {children}
         </ThemeProvider>
       </body>

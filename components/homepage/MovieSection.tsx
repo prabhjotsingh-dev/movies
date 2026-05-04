@@ -7,23 +7,26 @@ import {
 } from "@/components/ui/carousel";
 import { MovieCard } from "./MovieCard";
 import { TMDBSearchResponse } from "../types";
+import Link from "next/link";
+import routes from "@/comman/routes";
 
 interface MovieSectionProps {
   title: string;
   fetcher: () => Promise<TMDBSearchResponse>;
+  language?: string;
   count?: number;
 }
 
 export const MovieSection = async ({
   title,
+  language,
   fetcher,
   count = 10,
 }: MovieSectionProps) => {
   try {
     const movies = await fetcher();
-    const results = movies.results
-      ?.filter((i) => i.poster_path)
-      .slice(0, count) || [];
+    const results =
+      movies.results?.filter((i) => i.poster_path).slice(0, count) || [];
 
     return (
       <section className="px-6 py-12 border-t lg:px-12 bg-background border-white/5">
@@ -36,7 +39,9 @@ export const MovieSection = async ({
               <div className="w-12 h-1 rounded-full bg-brand-primary" />
             </div>
             <button className="text-sm font-medium transition-colors text-muted-foreground hover:text-foreground">
-              View All
+              <Link href={routes.filterByLanguage(language?.toUpperCase())}>
+                View All
+              </Link>
             </button>
           </div>
 

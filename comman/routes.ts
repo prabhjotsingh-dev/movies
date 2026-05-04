@@ -3,6 +3,9 @@ const routes = {
   movie: (movieId: string): string => {
     return `/movie/${movieId}`;
   },
-  filter: "/filter",
+  filters: "/filters",
+  filterByLanguage: (language: string): string => {
+    return `/filters/${language}`;
+  },
 };
 export default routes;

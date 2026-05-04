@@ -36,7 +36,9 @@ export const MovieCard = ({
       )}
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      <div className={`relative w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl transition-colors duration-500 group-hover:border-white/20 ${useBackdropPathForPoster ? 'aspect-video' : 'aspect-[2/3]'}`}>
+      <div
+        className={`relative w-full overflow-hidden rounded-xl border border-white/10 shadow-2xl transition-colors duration-500 group-hover:border-white/20 ${useBackdropPathForPoster ? "aspect-video" : "aspect-[2/3]"}`}
+      >
         <Image
           className="object-cover transition-transform duration-1000 group-hover:scale-110"
           src={
@@ -54,7 +56,7 @@ export const MovieCard = ({
 
         <div className="absolute inset-0 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-shadow duration-500 group-hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)]" />
 
-        <Link href={routes.movie(movie.id.toString())}>
+        <Link href={routes.movie(String(movie.id))}>
           <CardContent
             className={`flex absolute inset-0 flex-col justify-end p-5 ${showNameAndRating}`}
           >
@@ -77,19 +79,37 @@ export const MovieCard = ({
                 {movie.title || "Untitled Movie"}
               </h2>
             )}
-            <div className="flex gap-2 items-center mt-1.5">
-              {showLanguage && (
+            <div className="flex justify-between gap-2 items-center mt-1.5">
+              <div className="flex gap-2 items-center">
+                {showLanguage && (
+                  <Badge
+                    variant="outline"
+                    className="text-white border-white/20 px-2 py-0 text-[0.65rem] uppercase tracking-wider bg-white/5"
+                  >
+                    {
+                      Langauges.find(
+                        (lang) => lang.code === movie.original_language,
+                      )?.name
+                    }
+                  </Badge>
+                )}
+                <Star className="text-brand-accent size-3 fill-brand-accent" />
+                <span className="font-mono text-[0.7rem] text-zinc-300 font-medium tracking-wider">
+                  {movie.vote_average?.toFixed(1) || "N/A"}
+                </span>
+              </div>
+              {movie.release_date && (
                 <Badge
                   variant="outline"
                   className="text-white border-white/20 px-2 py-0 text-[0.65rem] uppercase tracking-wider bg-white/5"
                 >
-                  {Langauges[movie.original_language]}
+                  {new Date(movie.release_date).toLocaleString("default", {
+                    month: "short",
+                  }) +
+                    "/" +
+                    new Date(movie.release_date).getFullYear()}
                 </Badge>
               )}
-              <Star className="text-brand-accent size-3 fill-brand-accent" />
-              <span className="font-mono text-[0.7rem] text-zinc-300 font-medium tracking-wider">
-                {movie.vote_average?.toFixed(1) || "N/A"}
-              </span>
             </div>
           </CardContent>
         </Link>
